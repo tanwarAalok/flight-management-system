@@ -1,0 +1,58 @@
+version: "3"
+networks:
+  micro-net:
+    driver: bridge
+volumes:
+  api-gateway-node-modules:
+  booking-service-node-modules:
+  flight-service-node-modules:
+  notification-service-node-modules:
+services:
+  api-gateway:
+    build: ./API_Gateway
+    networks:
+      - micro-net
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./API_Gateway:/FMS/api-gateway
+      - api-gateway-node-modules:/FMS/api-gateway/node_modules
+
+  booking-service:
+    build: ./Booking_Service
+    networks:
+      - micro-net
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./Booking_Service:/FMS/booking-service
+      - api-gateway-node-modules:/FMS/booking-service/node_modules
+
+  flight-service:
+    build: ./Flight_Service
+    networks:
+      - micro-net
+    ports: 
+      - "5002:5002"
+    volumes:
+      - ./Flight_Service:/FMS/flight-service
+      - api-gateway-node-modules:/FMS/flight-service/node_modules
+
+  notification-service:
+    build: ./Notification_Service
+    networks:
+      - micro-net
+    ports: 
+      - "5003:5003"
+    volumes:
+      - ./Notification_Service:/FMS/notification-service
+      - api-gateway-node-modules:/FMS/notification-service/node_modules
+  
+    
+# docker compose up -d // run all containers in detached mode kind of like -dit
+
+# docker build -t python-app .
+# docker run -it --init --name python_service --network microservice-network -p 3005:3005 -v "$(pwd)":/developer/pythonproject/flask-app  python-app:latest
+# docker run -dit --init --name api_gateway1 --network microservice-network -p 3001:3001 -v "$(pwd)":/developer/nodejs/api-gateway -v api-gateway-node-modules:/developer/nodejs/api-gateway/node_modules api-gateway:latest 
+# docker run -it --init --name flights_service --network microservice-network  -p 3000:3000 -v "$(pwd)":/developer/nodejs/flights-service -v flights-service-node-modules:/developer/nodejs/flights-service/node_modules flights-service:latest
+#  docker run -it --init --name booking_service --network microservice-network  -p 4000:4000 -v "$(pwd)":/developer/nodejs/booking-service -v booking-service-node-modules:/developer/nodejs/booking-service/node_modules booking-service:latest

@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /FMS/api-gateway
+WORKDIR /FMS/flight-service
 
 COPY . .
 

@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /FMS/api-gateway
+WORKDIR /FMS/notification-service
 
 COPY . .
 

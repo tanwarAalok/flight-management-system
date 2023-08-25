@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const info = (req, res) => {
     return res.status(StatusCodes.OK).json({
         success: true,
-        message: 'API is live',
+        message: 'Flight Service API is live',
         error: {},
         data: {},
     });
